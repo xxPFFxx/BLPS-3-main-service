@@ -5,6 +5,8 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 import javax.persistence.*;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.Pattern;
 import java.util.*;
 
 @Entity
@@ -20,6 +22,10 @@ public class User {
 
     @Column(nullable = false)
     private String username;
+
+    @Email
+    @Column(nullable = false)
+    private String email;
 
     @Column(nullable = false)
     private String password;
@@ -62,8 +68,9 @@ public class User {
         this.password = password;
     }
 
-    public User(String username, String password, String roles, String permissions){
+    public User(String username, String password, String roles, String permissions, String email){
         this.username = username;
+        this.email = email;
         this.password = password;
         this.roles = roles;
         this.permissions = permissions;
@@ -164,5 +171,13 @@ public class User {
 
     public void setSubscriptions(Set<User> subscriptions) {
         this.subscriptions = subscriptions;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 }

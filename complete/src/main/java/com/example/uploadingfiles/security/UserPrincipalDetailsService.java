@@ -41,7 +41,7 @@ public class UserPrincipalDetailsService implements UserDetailsService {
         TypeReference<List<User>> typeReference = new TypeReference<List<User>>() {};
         List<User> persons = mapper.readValue(inputStream, typeReference);
         for(User p :persons) {
-            if (p.getUsername().equals(username)) return new User(p.getUsername(), p.getPassword(), p.getRoles(), p.getPermissions());
+            if (p.getUsername().equals(username)) return new User(p.getUsername(), p.getPassword(), p.getEmail(), p.getRoles(), p.getPermissions());
         }
         // Edit this code and read password and roles from data base or files
         return null;

@@ -35,9 +35,9 @@ public class DbInit implements CommandLineRunner {
 //        this.userRepository.deleteAll();
 //
 //        // Create users
-//        User dan = new User("dan",passwordEncoder.encode("dan123"),"USER","");
-//        User admin = new User("admin",passwordEncoder.encode("admin123"),"ADMIN","");
-//        User moderator = new User("moderator",passwordEncoder.encode("moderator123"),"MODERATOR","");
+//        User dan = new User("dan",passwordEncoder.encode("dan123"),"USER","", "dan@gmail.com");
+//        User admin = new User("admin",passwordEncoder.encode("admin123"),"ADMIN","", "admin@gmail.com");
+//        User moderator = new User("moderator",passwordEncoder.encode("moderator123"),"MODERATOR","", "moderator@gmail.com");
 //
 //        List<User> users = Arrays.asList(dan,admin,moderator);
 //
