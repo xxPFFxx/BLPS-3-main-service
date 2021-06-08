@@ -1,4 +1,4 @@
-package com.example.uploadingfiles;
+package com.example.uploadingfiles.controllers;
 
 import java.io.IOException;
 import java.security.Principal;
@@ -9,7 +9,6 @@ import java.util.stream.Collectors;
 
 import com.example.uploadingfiles.model.User;
 import com.example.uploadingfiles.model.VideoInfo;
-import com.example.uploadingfiles.security.UserPrincipal;
 import com.example.uploadingfiles.services.UserService;
 import com.example.uploadingfiles.services.VideoInfoService;
 import com.example.uploadingfiles.exceptions.StorageException;
@@ -19,11 +18,11 @@ import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.method.annotation.MvcUriComponentsBuilder;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.example.uploadingfiles.exceptions.StorageFileNotFoundException;
 import com.example.uploadingfiles.util.StorageService;
 
@@ -33,12 +32,16 @@ public class FileUploadController {
 	private final StorageService storageService;
 	private final UserService userService;
 	private final VideoInfoService videoInfoService;
+	private final KafkaTemplate<String, VideoInfo> kafkaTemplate;
+
+	private static final String TOPIC = "Notification_Topic3";
 
 	@Autowired
-	public FileUploadController(StorageService storageService, UserService userService, VideoInfoService videoInfoService) {
+	public FileUploadController(StorageService storageService, UserService userService, VideoInfoService videoInfoService, KafkaTemplate<String, VideoInfo> kafkaTemplate) {
 		this.storageService = storageService;
 		this.userService = userService;
 		this.videoInfoService = videoInfoService;
+		this.kafkaTemplate = kafkaTemplate;
 	}
 	@Value("errortext") String errorText;
 
@@ -87,7 +90,7 @@ public class FileUploadController {
 					.collect(StringBuilder::new, StringBuilder::appendCodePoint, StringBuilder::append)
 					.toString();
 			//TODO проверка, нет ли такой линки уже
-
+			kafkaTemplate.send(TOPIC, new VideoInfo(null, null, null, null, null, generatedString, 0, new User(principal.getName(),""), false));
 			return new ResponseEntity<>(videoInfoService.saveVideoInfo(null, null, null, null, null, generatedString, principal.getName()),HttpStatus.OK);
 		}
 

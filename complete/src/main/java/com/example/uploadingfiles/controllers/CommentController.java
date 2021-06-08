@@ -1,4 +1,4 @@
-package com.example.uploadingfiles;
+package com.example.uploadingfiles.controllers;
 
 import com.example.uploadingfiles.exceptions.StorageFileNotFoundException;
 import com.example.uploadingfiles.exceptions.VideoInfoNotFoundException;

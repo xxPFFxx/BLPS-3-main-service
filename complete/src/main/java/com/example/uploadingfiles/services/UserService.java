@@ -1,5 +1,6 @@
 package com.example.uploadingfiles.services;
 
+import com.example.uploadingfiles.exceptions.UserNotFoundException;
 import com.example.uploadingfiles.model.User;
 import com.example.uploadingfiles.repositories.UserRepository;
 import com.example.uploadingfiles.security.UserPrincipal;
@@ -72,4 +73,19 @@ public class UserService implements UserDetailsService {
         return mapper.readValue(inputStream, typeReference);
     }
 
+    public void subscribe(String username, String name) throws UserNotFoundException {
+        User user = userRepository.findByUsername(username);
+        User currentUser = userRepository.findByUsername(name);
+        if (user == null) throw new UserNotFoundException(username);
+        user.getSubscribers().add(currentUser);
+        userRepository.save(user);
+    }
+
+    public void unsubscribe(String username, String name) throws UserNotFoundException {
+        User user = userRepository.findByUsername(username);
+        User currentUser = userRepository.findByUsername(name);
+        if (user == null) throw new UserNotFoundException(username);
+        user.getSubscribers().remove(currentUser);
+        userRepository.save(user);
+    }
 }

@@ -31,7 +31,7 @@ public class DbInit implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws IOException {
-        // Delete all
+//        // Delete all
 //        this.userRepository.deleteAll();
 //
 //        // Create users
