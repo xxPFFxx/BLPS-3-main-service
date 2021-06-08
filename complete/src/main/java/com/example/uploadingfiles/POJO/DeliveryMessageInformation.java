@@ -5,6 +5,9 @@ import java.io.Serializable;
 public class DeliveryMessageInformation implements Serializable {
     private String link;
 
+    public DeliveryMessageInformation() {
+    }
+
     public DeliveryMessageInformation(String link) {
         this.link = link;
     }

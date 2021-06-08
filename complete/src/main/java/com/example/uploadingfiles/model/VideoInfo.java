@@ -46,7 +46,10 @@ public class VideoInfo {
     @Column(name = "popular")
     private Boolean popular;
 
-    public VideoInfo(String name, String desc, String category, String releasetime, String releasedate, String link, int views, User user, Boolean popular) {
+    @Column(name = "notificationssent")
+    private int notificationssent;
+
+    public VideoInfo(String name, String desc, String category, String releasetime, String releasedate, String link, int views, User user, Boolean popular, int notificationssent) {
         this.link = link;
         this.name = name;
         this.desc = desc;
@@ -56,6 +59,7 @@ public class VideoInfo {
         this.views = views;
         this.user = user;
         this.popular = popular;
+        this.notificationssent = notificationssent;
     }
 
     public VideoInfo() {
@@ -157,4 +161,13 @@ public class VideoInfo {
     public void setPopular(Boolean popular) {
         this.popular = popular;
     }
+
+    public int getNotificationssent() {
+        return notificationssent;
+    }
+
+    public void setNotificationssent(int notificationssent) {
+        this.notificationssent = notificationssent;
+    }
 }
+

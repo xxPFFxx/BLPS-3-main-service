@@ -25,7 +25,7 @@ public class VideoInfoService {
 
     public VideoInfo saveVideoInfo(String videoName, String videoDesc, String category, String releaseTime, String releaseDate, String link, String username){
         User user = userRepository.findByUsername(username);
-        VideoInfo videoInfo = new VideoInfo(videoName, videoDesc, category, releaseTime, releaseDate, link, 0, user, Boolean.FALSE);
+        VideoInfo videoInfo = new VideoInfo(videoName, videoDesc, category, releaseTime, releaseDate, link, 0, user, Boolean.FALSE, 0);
         return videoInfoRepository.save(videoInfo);
     }
 
@@ -78,5 +78,9 @@ public class VideoInfoService {
         for (VideoInfo videoInfo : videoInfos){
             videoInfoRepository.updatePopularStatus(videoInfo.getLink());
         }
+    }
+
+    public int updateNotificationsSent(String link, int notificationssent){
+        return videoInfoRepository.updateNotificationsSent(link, notificationssent);
     }
 }
