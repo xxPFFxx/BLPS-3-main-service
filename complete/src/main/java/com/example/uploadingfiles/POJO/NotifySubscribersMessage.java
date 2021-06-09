@@ -2,13 +2,13 @@ package com.example.uploadingfiles.POJO;
 
 import java.io.Serializable;
 
-public class DeliveryMessageInformation implements Serializable {
+public class NotifySubscribersMessage implements Serializable {
     private String link;
 
-    public DeliveryMessageInformation() {
+    public NotifySubscribersMessage() {
     }
 
-    public DeliveryMessageInformation(String link) {
+    public NotifySubscribersMessage(String link) {
         this.link = link;
     }
 

@@ -1,7 +1,7 @@
 package com.example.uploadingfiles.services;
 
 
-import com.example.uploadingfiles.POJO.DeliveryMessageInformation;
+import com.example.uploadingfiles.POJO.NotifySubscribersMessage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Component;
@@ -9,9 +9,9 @@ import org.springframework.stereotype.Component;
 @Component
 public class NotificationProducer {
     @Autowired
-    KafkaTemplate<String, DeliveryMessageInformation> kafkaTemplate;
+    KafkaTemplate<String, NotifySubscribersMessage> kafkaTemplate;
 
-    public void send(DeliveryMessageInformation info){
+    public void send(NotifySubscribersMessage info){
         kafkaTemplate.send("Notification_Topic", info);
     }
 }

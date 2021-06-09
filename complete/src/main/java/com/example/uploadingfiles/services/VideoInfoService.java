@@ -5,10 +5,10 @@ import com.example.uploadingfiles.model.User;
 import com.example.uploadingfiles.model.VideoInfo;
 import com.example.uploadingfiles.repositories.UserRepository;
 import com.example.uploadingfiles.repositories.VideoInfoRepository;
-import com.example.uploadingfiles.security.UserPrincipal;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -73,11 +73,14 @@ public class VideoInfoService {
         return videoInfo;
     }
 
-    public void setPopularStatus(){
+    public ArrayList<String> setPopularStatus(){
         List<VideoInfo> videoInfos =  videoInfoRepository.selectPotentialPopularVideos();
+        ArrayList<String> links = new ArrayList<>();
         for (VideoInfo videoInfo : videoInfos){
             videoInfoRepository.updatePopularStatus(videoInfo.getLink());
+            links.add(videoInfo.getLink());
         }
+        return links;
     }
 
     public int updateNotificationsSent(String link, int notificationssent){

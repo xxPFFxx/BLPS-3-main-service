@@ -7,9 +7,7 @@ import java.util.Map;
 import java.util.Random;
 import java.util.stream.Collectors;
 
-import com.example.uploadingfiles.POJO.DeliveryMessageInformation;
-import com.example.uploadingfiles.model.User;
-import com.example.uploadingfiles.model.VideoInfo;
+import com.example.uploadingfiles.POJO.NotifySubscribersMessage;
 import com.example.uploadingfiles.services.UserService;
 import com.example.uploadingfiles.services.VideoInfoService;
 import com.example.uploadingfiles.exceptions.StorageException;
@@ -33,12 +31,12 @@ public class FileUploadController {
 	private final StorageService storageService;
 	private final UserService userService;
 	private final VideoInfoService videoInfoService;
-	private final KafkaTemplate<String, DeliveryMessageInformation> kafkaTemplate;
+	private final KafkaTemplate<String, NotifySubscribersMessage> kafkaTemplate;
 
 	private static final String TOPIC = "NotificationTopicb";
 
 	@Autowired
-	public FileUploadController(StorageService storageService, UserService userService, VideoInfoService videoInfoService, KafkaTemplate<String, DeliveryMessageInformation> kafkaTemplate) {
+	public FileUploadController(StorageService storageService, UserService userService, VideoInfoService videoInfoService, KafkaTemplate<String, NotifySubscribersMessage> kafkaTemplate) {
 		this.storageService = storageService;
 		this.userService = userService;
 		this.videoInfoService = videoInfoService;
@@ -91,7 +89,7 @@ public class FileUploadController {
 					.collect(StringBuilder::new, StringBuilder::appendCodePoint, StringBuilder::append)
 					.toString();
 			//TODO проверка, нет ли такой линки уже
-			kafkaTemplate.send(TOPIC, new DeliveryMessageInformation(generatedString));
+			kafkaTemplate.send(TOPIC, new NotifySubscribersMessage(generatedString));
 			return new ResponseEntity<>(videoInfoService.saveVideoInfo(null, null, null, null, null, generatedString, principal.getName()),HttpStatus.OK);
 		}
 

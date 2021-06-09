@@ -45,7 +45,7 @@ public interface VideoInfoRepository extends JpaRepository<VideoInfo, Long> {
     @Transactional
     @Modifying
     @Query("update VideoInfo v set v.views=v.views+1 where v.link= :link")
-    int countView(String link);
+    int countView(@Param("link") String link);
 
     @Query("select v from VideoInfo v where v.views>=10 and v.popular=false ")
     List<VideoInfo> selectPotentialPopularVideos();
@@ -53,7 +53,7 @@ public interface VideoInfoRepository extends JpaRepository<VideoInfo, Long> {
     @Transactional
     @Modifying
     @Query("update VideoInfo v set v.name = concat(v.name, ' [POPULAR]'), v.popular=true where v.link=:link")
-    int updatePopularStatus(String link);
+    int updatePopularStatus(@Param("link") String link);
 
     @Transactional
     @Modifying

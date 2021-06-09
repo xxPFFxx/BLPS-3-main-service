@@ -1,8 +1,6 @@
 package com.example.uploadingfiles.config;
 
-import com.example.uploadingfiles.POJO.DeliveryMessageInformation;
-import com.example.uploadingfiles.POJO.NotificationToMainMessage;
-import com.example.uploadingfiles.model.VideoInfo;
+import com.example.uploadingfiles.POJO.UpdateNotificationsSentMessage;
 import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.common.serialization.StringDeserializer;
 import org.springframework.context.annotation.Bean;
@@ -20,7 +18,7 @@ import java.util.HashMap;
 @Configuration
 public class KafkaConsumerConfig {
     @Bean
-    public ConsumerFactory<String, NotificationToMainMessage> consumerFactory() {
+    public ConsumerFactory<String, UpdateNotificationsSentMessage> consumerFactory() {
         Map<String, Object> config = new HashMap<>();
 
         config.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, "localhost:9092");
@@ -30,12 +28,12 @@ public class KafkaConsumerConfig {
 
 //        JsonDeserializer deserializer = new JsonDeserializer<VideoInfo>();
 //        deserializer.addTrustedPackages("*");
-        return new DefaultKafkaConsumerFactory<>(config, new StringDeserializer(), new JsonDeserializer<>(NotificationToMainMessage.class));
+        return new DefaultKafkaConsumerFactory<>(config, new StringDeserializer(), new JsonDeserializer<>(UpdateNotificationsSentMessage.class));
     }
 
     @Bean
-    public ConcurrentKafkaListenerContainerFactory<String, NotificationToMainMessage> kafkaListenerContainerFactory() {
-        ConcurrentKafkaListenerContainerFactory<String, NotificationToMainMessage> factory = new ConcurrentKafkaListenerContainerFactory<>();
+    public ConcurrentKafkaListenerContainerFactory<String, UpdateNotificationsSentMessage> kafkaListenerContainerFactory() {
+        ConcurrentKafkaListenerContainerFactory<String, UpdateNotificationsSentMessage> factory = new ConcurrentKafkaListenerContainerFactory<>();
         factory.setConsumerFactory(consumerFactory());
         return factory;
     }
